@@ -55,6 +55,10 @@ module mb_usb_hdmi_top(
     logic [3:0] bred, bgreen, bblue;
     logic [3:0] wred, wgreen, wblue;
     logic [3:0] fred, fgreen, fblue;
+    logic [3:0] ored, ogreen, oblue;
+    
+    logic fdead, gdead;
+    logic game_girl, game_boy; 
     
     //Keycode HEX drivers
     hex_driver HexA (
@@ -151,7 +155,9 @@ module mb_usb_hdmi_top(
         .BallH(ballh),
         .BallW(ballw),
         .bottom(bottom),
-        .right(right)
+        .right(right),
+        .gdead(gdead),
+        .game_girl(game_girl)
     );
     
         //Ball Module
@@ -167,7 +173,9 @@ module mb_usb_hdmi_top(
         .BallH(ballhf),
         .BallW(ballwf),
         .fbottom(fbottom),
-        .fright(fright)
+        .fright(fright),
+        .fdead(fdead),
+        .game_boy(game_boy)
     );
     
     
@@ -194,7 +202,14 @@ module mb_usb_hdmi_top(
         .wblue(wblue),
         .fred(fred),
         .fgreen(fgreen),
-        .fblue(fblue)
+        .fblue(fblue),
+        .ored(ored),
+        .ogreen(ogreen),
+        .oblue(oblue),
+        .fdead(fdead),
+        .gdead(gdead),
+        .game_boy(game_boy), 
+        .game_girl(game_girl)
     );
     
     screen_example screen(
@@ -205,6 +220,16 @@ module mb_usb_hdmi_top(
 	    .red(bred), 
 	    .green(bgreen), 
 	    .blue(bblue)
+    );
+    
+    game_over_example game_over(
+        .vga_clk(clk_25MHz),
+	    .DrawX(drawX), 
+	    .DrawY(drawY),
+	    .blank(vde),
+	    .red(ored), 
+	    .green(ogreen), 
+	    .blue(oblue)
     );
     
     Watergirl_example watergirl(

@@ -18,6 +18,8 @@ assign negedge_vga_clk = ~vga_clk;
 // address into the rom = (x*xDim)/640 + ((y*yDim)/480) * xDim
 // this will stretch out the sprite across the entire screen
 assign rom_address = ((23 - (right-DrawX-3)) * 10) + (((31 - (bottom-DrawY)) * 10) * 240);
+//assign rom_address = (DrawX - (right - 15)) + (DrawY - (bottom - 20))* 30 ;
+//assign rom_address = (DrawX-right+15) + 30*(DrawY-bottom+20);
 //((DrawX * 240)/53) + (((DrawY * 320)/40) * 240);
 
 always_ff @ (posedge vga_clk) begin
@@ -38,7 +40,7 @@ Watergirl_rom Watergirl_rom (
 	.douta       (rom_q)
 );
 
-Watergirl_pink_palette Watergirl_palette (
+Watergirl_red_palette Watergirl_palette (
 	.index (rom_q),
 	.red   (palette_red),
 	.green (palette_green),
